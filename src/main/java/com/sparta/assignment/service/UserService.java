@@ -40,9 +40,10 @@ public class UserService {
         User user = userRepository.findByUsername(username).orElseThrow(
                 () -> new IllegalArgumentException("등록된 사용자가 없습니다.")
                     );
-
+                            // 이거 둘이 합치는 방법 없나... Repository가 optional 메서드라 user로 강제변환 밖에 안되네..
+                            // if 문으로 둘이 묶어서 처리하고 싶은데...
         if(!user.getPassword().equals(password)){
-            throw  new IllegalArgumentException("비밀번호가 일치하지 않습니다.");
+            throw new IllegalArgumentException("비밀번호가 일치하지 않습니다.");
         }
         response.addHeader(JwtUtil.AUTHORIZATION_HEADER, jwtUtil.createToken(user.getUsername()));
     }

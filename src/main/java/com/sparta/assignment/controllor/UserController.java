@@ -4,6 +4,7 @@ import com.sparta.assignment.dto.SigninRequestDto;
 import com.sparta.assignment.dto.SignupRequestDto;
 import com.sparta.assignment.service.UserService;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -17,7 +18,7 @@ public class UserController {
     private final UserService userService;   // userservice랑 연결, 생성자 주입을 통한 DI
 
     @PostMapping("/signup")
-    public String signup(SignupRequestDto signupRequestDto) {
+    public String signup(@Valid SignupRequestDto signupRequestDto) {
         userService.signup(signupRequestDto);
         return "회원가입 완료!";
     }
