@@ -1,12 +1,21 @@
 package com.sparta.assignment.dto;
 
+import com.sparta.assignment.entity.Memo;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Getter
+@NoArgsConstructor
 public class MemoRequestDto {
 
     private String title;
     private String username;
     private String contents;
-    private String password;
+
+    public MemoRequestDto(Memo memo) {
+        this.title = title;
+        this.username = username;
+        this.contents = contents;
+    }
+
 }
