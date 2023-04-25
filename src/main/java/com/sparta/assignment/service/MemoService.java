@@ -1,6 +1,7 @@
 package com.sparta.assignment.service;
 
 import com.sparta.assignment.dto.MemoRequestDto;
+import com.sparta.assignment.dto.MemoResponseDto;
 import com.sparta.assignment.entity.Memo;
 import com.sparta.assignment.entity.User;
 import com.sparta.assignment.jwt.JwtUtil;
@@ -53,9 +54,10 @@ public class MemoService {
 
 
     @Transactional(readOnly = true)
-    public Memo getMemo(Long id) {
-        return memoRepository.findById(id)
+    public MemoResponseDto getMemo(Long id) {
+        Memo memo = memoRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 게시글입니다"));
+        return new MemoResponseDto(memo);
     }
 
 

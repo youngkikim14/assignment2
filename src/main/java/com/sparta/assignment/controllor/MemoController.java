@@ -1,6 +1,7 @@
 package com.sparta.assignment.controllor;
 
 import com.sparta.assignment.dto.MemoRequestDto;
+import com.sparta.assignment.dto.MemoResponseDto;
 import com.sparta.assignment.entity.Memo;
 import com.sparta.assignment.service.MemoService;
 import jakarta.servlet.http.HttpServletRequest;
@@ -35,7 +36,7 @@ public class MemoController {
     }
 
     @GetMapping("/api/memos/{id}")//특정 게시물 조회
-    public Memo getMemo(@PathVariable Long id) {
+    public MemoResponseDto getMemo(@PathVariable Long id) {
         return memoService.getMemo(id);
     }
 
