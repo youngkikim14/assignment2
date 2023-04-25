@@ -53,7 +53,7 @@ public class MemoService {
     }
 
 
-    @Transactional(readOnly = true)
+    @Transactional(readOnly = true) // responsedto 작성으로 보여주고 싶은 내용만 만들어냄
     public MemoResponseDto getMemo(Long id) {
         Memo memo = memoRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 게시글입니다"));
