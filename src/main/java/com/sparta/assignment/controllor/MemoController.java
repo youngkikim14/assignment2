@@ -41,13 +41,13 @@ public class MemoController {
 
 
     @PutMapping("/api/memos/{id}")//수정
-    public Long updateMemo(@PathVariable Long id,@RequestBody MemoRequestDto requestDto){
-        return memoService.update(id, requestDto);//필요한 값을 넣어줌(id, requestDto)
+    public Long updateMemo(@PathVariable Long id,@RequestBody MemoRequestDto requestDto, HttpServletRequest request){
+        return memoService.update(id, requestDto, request);//필요한 값을 넣어줌(id, requestDto)
     }
 
     @DeleteMapping("/api/memos/{id}")//삭제
-    public Long deleteMemo(@PathVariable Long id, @RequestBody MemoRequestDto requestDto){
-        return memoService.deleteMemo(id, requestDto);
+    public Long deleteMemo(@PathVariable Long id,HttpServletRequest request){
+        return memoService.deleteMemo(id,request);
     }
 
 

@@ -14,7 +14,6 @@ public class Memo extends Timestamped {
     @GeneratedValue(strategy = GenerationType.AUTO)//숫자를 자동으로 더해줌
     private Long id;
 
-
     @Column(nullable = false)
     private String title;
 
@@ -25,22 +24,16 @@ public class Memo extends Timestamped {
     private String contents;
 
     @Column(nullable = false)
-    private String password;
+    private Long userId;
 
 
-    public Memo(MemoRequestDto requestDto, Long id) {
+
+    public Memo(MemoRequestDto requestDto, Long userId) {
 
         this.title = requestDto.getTitle();
-        this.username = requestDto.getUsername();
         this.contents = requestDto.getContents();
+        this.userId = userId;
 
     }
-
-    public void update(MemoRequestDto requestDto) {
-        this.title = requestDto.getTitle();
-        this.username = requestDto.getUsername();
-        this.contents = requestDto.getContents();
-    }
-
 
 }

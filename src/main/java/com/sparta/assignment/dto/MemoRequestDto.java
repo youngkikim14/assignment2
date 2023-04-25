@@ -9,12 +9,10 @@ import lombok.NoArgsConstructor;
 public class MemoRequestDto {
 
     private String title;
-    private String username;
     private String contents;
 
     public MemoRequestDto(Memo memo) {
         this.title = title;
-        this.username = username;
         this.contents = contents;
     }
 
