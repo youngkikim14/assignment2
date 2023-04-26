@@ -1,7 +1,6 @@
 package com.sparta.assignment.dto;
 
 import com.sparta.assignment.entity.Memo;
-import jakarta.persistence.Column;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -13,8 +12,8 @@ public class MemoResponseDto {
     private String contents;
 
     public MemoResponseDto(Memo memo) {
-        this.title = title;
-        this.username = username;
-        this.contents = contents;
+        this.title = memo.getTitle();
+        this.username = memo.getUsername();
+        this.contents = memo.getContents();
     }
 }

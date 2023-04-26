@@ -38,7 +38,7 @@ public class MemoService {
             User user = userRepository.findByUsername(claims.getSubject()).orElseThrow( //토큰이 맞으면 토큰으로 db에서 사용자 정보 조회
                     () -> new IllegalArgumentException("없는 유저입니다")
             );
-            Memo memo = memoRepository.saveAndFlush(new Memo(requestDto, user.getId()));
+            Memo memo = memoRepository.saveAndFlush(new Memo(requestDto, user.getUsername()));
 
             return new MemoRequestDto(memo);
         } else {
@@ -75,10 +75,14 @@ public class MemoService {
             User user = userRepository.findByUsername(claims.getSubject()).orElseThrow( //토큰이 맞으면 토큰으로 db에서 사용자 정보 조회
                     () -> new IllegalArgumentException("없는 유저입니다")
             );
-            Memo memo = memoRepository.findByIdAndUserId(id, user.getId()).orElseThrow( // 없는 글 null 처리
+            Memo memo = memoRepository.findByIdAndUsername(id, user.getUsername()).orElseThrow( // 없는 글 null 처리
                     () -> new NullPointerException("존재하지 않은 게시글입니다.")
             );
-            memoRepository.saveAndFlush(new Memo(requestDto, user.getId())); //업데이트가 memo entity에 따로 존재하는 이유를 모르겠음
+
+           memo.update(requestDto);
+//           return new MemoResponseDto(memo);
+
+//            memoRepository.saveAndFlush(new Memo(requestDto, user.getUsername())); //업데이트가 memo entity에 따로 존재하는 이유를 모르겠음
             return memo.getId(); // 일관성을 위해 memo entity에서 업데이트 삭제 후 덮어 씌울 수 있도록 함. 그런데 덮어쓰기가 되나?
         } else {
             return null;
@@ -112,7 +116,7 @@ public class MemoService {
             User user = userRepository.findByUsername(claims.getSubject()).orElseThrow( //토큰이 맞으면 토큰으로 db에서 사용자 정보 조회
                     () -> new IllegalArgumentException("없는 유저입니다")
             );
-            Memo memo = memoRepository.findByIdAndUserId(id, user.getId()).orElseThrow( // 없는 글 null 처리
+            Memo memo = memoRepository.findByIdAndUsername(id, user.getUsername()).orElseThrow( // 없는 글 null 처리
                     () -> new NullPointerException("존재하지 않은 게시글입니다.")
             );
             memoRepository.deleteById(id); // null 처리까지 끝난다면 레포지토리에서 해당 id의 내용 삭제
