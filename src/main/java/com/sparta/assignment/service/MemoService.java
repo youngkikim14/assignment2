@@ -25,7 +25,7 @@ public class MemoService {
     private final JwtUtil jwtUtil;
 
     @Transactional
-    public MemoRequestDto createMemo(MemoRequestDto requestDto, HttpServletRequest request) { //토큰값 가져와서 검증
+    public String createMemo(MemoRequestDto requestDto, HttpServletRequest request) { //토큰값 가져와서 검증
         String token = jwtUtil.resolveToken(request); //토큰값
         Claims claims;
 
@@ -40,7 +40,7 @@ public class MemoService {
             );
             Memo memo = memoRepository.saveAndFlush(new Memo(requestDto, user.getUsername()));
 
-            return new MemoRequestDto(memo);
+            return "게시물 저장 성공";
         } else {
             return null;
         }
@@ -62,7 +62,7 @@ public class MemoService {
 
 
     @Transactional
-    public Long update(Long id, MemoRequestDto requestDto, HttpServletRequest request) {
+    public String update(Long id, MemoRequestDto requestDto, HttpServletRequest request) {
         String token = jwtUtil.resolveToken(request); //토큰값
         Claims claims;
 
@@ -78,32 +78,15 @@ public class MemoService {
             Memo memo = memoRepository.findByIdAndUsername(id, user.getUsername()).orElseThrow( // 없는 글 null 처리
                     () -> new NullPointerException("존재하지 않은 게시글입니다.")
             );
-
            memo.update(requestDto);
-//           return new MemoResponseDto(memo);
-
-//            memoRepository.saveAndFlush(new Memo(requestDto, user.getUsername())); //업데이트가 memo entity에 따로 존재하는 이유를 모르겠음
-            return memo.getId(); // 일관성을 위해 memo entity에서 업데이트 삭제 후 덮어 씌울 수 있도록 함. 그런데 덮어쓰기가 되나?
+            return "업데이트 완료";
         } else {
             return null;
         }
     }
-    //        Memo memo = memoRepository.findById(id).orElseThrow(
-//                ()-> new IllegalArgumentException("아이디가 존재하지 않습니다")
-//        );
-//
-//        // 패스워드가 일치하는지 확인
-//        if (requestDto.getPassword() != null && memo.getPassword().equals(requestDto.getPassword())) {
-//            memo.update(requestDto);
-//        } else {
-//            throw new IllegalArgumentException("패스워드가 일치하지 않습니다.");
-//        }
-//
-//        return memo.getId();
-
 
     @Transactional
-    public Long deleteMemo(Long id, HttpServletRequest request) {
+    public String deleteMemo(Long id, HttpServletRequest request) {
         String token = jwtUtil.resolveToken(request); //토큰값
         Claims claims;
 
@@ -120,7 +103,7 @@ public class MemoService {
                     () -> new NullPointerException("존재하지 않은 게시글입니다.")
             );
             memoRepository.deleteById(id); // null 처리까지 끝난다면 레포지토리에서 해당 id의 내용 삭제
-            return memo.getId();
+            return "삭제 완료";
         } else {
             return null;
         }

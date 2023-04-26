@@ -25,7 +25,7 @@ public class MemoController {
 
 
     @PostMapping("/api/memos")// 쿠키값 헤더 부분에 담긴 토큰과 작성내용 가져오기
-    public MemoRequestDto createMemo(@RequestBody MemoRequestDto requestDto, HttpServletRequest request){
+    public String createMemo(@RequestBody MemoRequestDto requestDto, HttpServletRequest request){
 
         return memoService.createMemo(requestDto, request);
     }
@@ -42,12 +42,12 @@ public class MemoController {
 
 
     @PutMapping("/api/memos/{id}")//수정
-    public Long updateMemo(@PathVariable Long id,@RequestBody MemoRequestDto requestDto, HttpServletRequest request){
+    public String updateMemo(@PathVariable Long id,@RequestBody MemoRequestDto requestDto, HttpServletRequest request){
         return memoService.update(id, requestDto, request);//필요한 값을 넣어줌(id, requestDto)
     }
 
     @DeleteMapping("/api/memos/{id}")//삭제
-    public Long deleteMemo(@PathVariable Long id,HttpServletRequest request){
+    public String deleteMemo(@PathVariable Long id,HttpServletRequest request){
         return memoService.deleteMemo(id,request);
     }
 
